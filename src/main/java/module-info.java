@@ -1,8 +1,8 @@
-module com.tuempresa.guia_practica_pareja {
+module com.tuempresa.RegistroEmpleadosFX {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.tuempresa.guia_practica_pareja to javafx.fxml;
-    exports com.tuempresa.guia_practica_pareja;
+    opens com.tuempresa.RegistroEmpleadosFX to javafx.fxml;
+    exports com.tuempresa.RegistroEmpleadosFX;
 }

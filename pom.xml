@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tuempresa</groupId>
-    <artifactId>guia_Practica_pareja</artifactId>
+    <artifactId>RegistroEmpleadosFX</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>guia_Practica_pareja</name>
 
@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.tuempresa.guia_practica_pareja/com.tuempresa.guia_practica_pareja.HelloApplication
+                                com.tuempresa.guia_practica_pareja/com.tuempresa.RegistroEmpleadosFX.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

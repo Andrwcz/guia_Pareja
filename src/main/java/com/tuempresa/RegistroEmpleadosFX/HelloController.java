@@ -1,4 +1,4 @@
-package com.tuempresa.guia_practica_pareja;
+package com.tuempresa.RegistroEmpleadosFX;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
