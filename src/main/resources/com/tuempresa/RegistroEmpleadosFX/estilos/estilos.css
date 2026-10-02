@@ -1,0 +1,132 @@
+/* ==========================================
+   ESTILOS GENERALES Y CONTENEDOR PRINCIPAL
+   ========================================== */
+.root-container {
+    -fx-background-color: #f4f6f9;
+}
+
+/* ==========================================
+   TÍTULOS
+   ========================================== */
+.title-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a252f;
+    -fx-padding: 0 0 10 0;
+}
+
+.subtitle-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ==========================================
+   FORMULARIO Y CONTROLES
+   ========================================== */
+.form-grid {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.form-control {
+    -fx-font-size: 13px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+}
+
+.form-control:focused {
+    -fx-border-color: #3498db;
+}
+
+/* ==========================================
+   BOTONES
+   ========================================== */
+.button-box {
+    -fx-padding: 10 0 10 0;
+}
+
+.btn-primary {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #219150;
+}
+
+.btn-secondary {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #c0392b;
+}
+
+.btn-action {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-action:hover {
+    -fx-background-color: #1f618d;
+}
+
+/* ==========================================
+   TABLEVIEW Y COLUMNAS
+   ========================================== */
+.custom-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4px;
+}
+
+.custom-table .column-header-background {
+    -fx-background-color: #34495e;
+}
+
+.custom-table .column-header, .custom-table .filler {
+    -fx-background-color: transparent;
+    -fx-size: 35px;
+}
+
+.custom-table .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.custom-table .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.custom-table .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.custom-table .table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
