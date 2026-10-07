@@ -69,7 +69,7 @@
 
                 <configuration>
                     <mainClass>
-                        com.tuempresa.RegistroEmpleadosFX/com.tuempresa.RegistroEmpleadosFX.Launcher
+                        com.tuempresa.RegistroEmpleadosFX/com.tuempresa.RegistroEmpleadosFX.RegistroEmpleadosApplication.Launcher
                     </mainClass>
                 </configuration>
             </plugin>

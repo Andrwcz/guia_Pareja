@@ -1,13 +1,7 @@
-/* ==========================================
-   ESTILOS GENERALES Y CONTENEDOR PRINCIPAL
-   ========================================== */
 .root-container {
     -fx-background-color: #f4f6f9;
 }
 
-/* ==========================================
-   TÍTULOS
-   ========================================== */
 .title-label {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
@@ -21,9 +15,6 @@
     -fx-text-fill: #2c3e50;
 }
 
-/* ==========================================
-   FORMULARIO Y CONTROLES
-   ========================================== */
 .form-grid {
     -fx-background-color: #ffffff;
     -fx-padding: 15;
@@ -48,9 +39,6 @@
     -fx-border-color: #3498db;
 }
 
-/* ==========================================
-   BOTONES
-   ========================================== */
 .button-box {
     -fx-padding: 10 0 10 0;
 }
@@ -94,9 +82,32 @@
     -fx-background-color: #1f618d;
 }
 
-/* ==========================================
-   TABLEVIEW Y COLUMNAS
-   ========================================== */
+.btn-update-reg {
+    -fx-background-color: #7f8c8d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-update-reg:hover {
+    -fx-background-color: #6c7a89;
+}
+
+.btn-danger {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #a93226;
+}
+
 .custom-table {
     -fx-background-color: #ffffff;
     -fx-border-color: #bdc3c7;

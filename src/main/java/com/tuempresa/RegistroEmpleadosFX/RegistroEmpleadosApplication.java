@@ -26,4 +26,10 @@ public class RegistroEmpleadosApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public static class Launcher {
+        public static void main(String[] args) {
+            launch(HelloApplication.class, args);
+        }
+    }
 }

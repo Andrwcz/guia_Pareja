@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class EmpleadoController {
 
@@ -30,7 +31,9 @@ public class EmpleadoController {
     // Botones
     @FXML private Button btnGuardar;
     @FXML private Button btnLimpiar;
-    @FXML private Button btnActualizar;
+    @FXML private Button btnActualizar; // Corresponde al botón "Actualizar tabla"
+    @FXML private Button btnRegistro;   // Corresponde a "Actualizar registro"
+    @FXML private Button btnEliminar;   // Corresponde a "Eliminar registro"
 
     // TableView y Columnas
     @FXML private TableView<Empleado> tblEmpleados;
@@ -72,9 +75,30 @@ public class EmpleadoController {
                 "Activo", "Inactivo"
         ));
 
-        // 3. Inicializar lista y cargar empleados desde PostgreSQL
+        // 3. Listener para seleccionar un registro de la tabla y llenar los campos del formulario
+        tblEmpleados.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                cargarDatosEnFormulario(newSelection);
+            }
+        });
+
+        // 4. Inicializar lista y cargar empleados desde PostgreSQL
         listaEmpleados = FXCollections.observableArrayList();
         cargarEmpleados();
+    }
+
+    // Pasa los datos del Empleado seleccionado a los campos de texto
+    private void cargarDatosEnFormulario(Empleado emp) {
+        txtNombres.setText(emp.getNombres());
+        txtApellidos.setText(emp.getApellidos());
+        txtCedula.setText(emp.getCedula());
+        txtCorreo.setText(emp.getCorreo());
+        txtTelefono.setText(emp.getTelefono());
+        txtCargo.setText(emp.getCargo());
+        cmbDepartamento.setValue(emp.getDepartamento());
+        txtSalario.setText(String.valueOf(emp.getSalario()));
+        dpFechaContratacion.setValue(emp.getFechaContratacion());
+        cmbEstado.setValue(emp.getEstado());
     }
 
     // Método para consultar y llenar el TableView
@@ -148,6 +172,88 @@ public class EmpleadoController {
         }
     }
 
+    // Método para Actualizar el registro seleccionado
+    @FXML
+    public void actualizarRegistro(ActionEvent event) {
+        Empleado empSeleccionado = tblEmpleados.getSelectionModel().getSelectedItem();
+
+        if (empSeleccionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Selección Requerida", "Por favor, selecciona un empleado de la tabla para actualizar.");
+            return;
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        String sql = "UPDATE empleado SET nombres=?, apellidos=?, cedula=?, correo=?, telefono=?, cargo=?, departamento=?, salario=?, fecha_contratacion=?, estado=? WHERE id=?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, txtNombres.getText().trim());
+            stmt.setString(2, txtApellidos.getText().trim());
+            stmt.setString(3, txtCedula.getText().trim());
+            stmt.setString(4, txtCorreo.getText().trim());
+            stmt.setString(5, txtTelefono.getText().trim());
+            stmt.setString(6, txtCargo.getText().trim());
+            stmt.setString(7, cmbDepartamento.getValue());
+            stmt.setDouble(8, Double.parseDouble(txtSalario.getText().trim()));
+            stmt.setDate(9, Date.valueOf(dpFechaContratacion.getValue()));
+            stmt.setString(10, cmbEstado.getValue());
+            stmt.setInt(11, empSeleccionado.getId());
+
+            int filasAfectadas = stmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El registro del empleado fue actualizado correctamente.");
+                limpiarCampos(null);
+                cargarEmpleados();
+            }
+
+        } catch (SQLException e) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al Actualizar", "Ocurrió un error al actualizar la base de datos:\n" + e.getMessage());
+        }
+    }
+
+    // Método para Eliminar el registro seleccionado
+    @FXML
+    public void eliminarRegistro(ActionEvent event) {
+        Empleado empSeleccionado = tblEmpleados.getSelectionModel().getSelectedItem();
+
+        if (empSeleccionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Selección Requerida", "Por favor, selecciona un empleado de la tabla para eliminar.");
+            return;
+        }
+
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setTitle("Confirmar Eliminación");
+        confirmacion.setHeaderText(null);
+        confirmacion.setContentText("¿Estás seguro de que deseas eliminar a " + empSeleccionado.getNombres() + " " + empSeleccionado.getApellidos() + "?");
+
+        Optional<ButtonType> respuesta = confirmacion.showAndWait();
+
+        if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
+            String sql = "DELETE FROM empleado WHERE id = ?";
+
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, empSeleccionado.getId());
+                int filasAfectadas = stmt.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El empleado ha sido eliminado correctamente.");
+                    limpiarCampos(null);
+                    cargarEmpleados();
+                }
+
+            } catch (SQLException e) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error al Eliminar", "No se pudo eliminar el registro:\n" + e.getMessage());
+            }
+        }
+    }
+
     // Método asociado al botón Limpiar
     @FXML
     public void limpiarCampos(ActionEvent event) {
@@ -161,6 +267,7 @@ public class EmpleadoController {
         txtSalario.clear();
         dpFechaContratacion.setValue(null);
         cmbEstado.setValue(null);
+        tblEmpleados.getSelectionModel().clearSelection();
     }
 
     // Método asociado al botón Actualizar tabla
@@ -192,7 +299,6 @@ public class EmpleadoController {
             errores.append("- Debe seleccionar un Estado.\n");
         }
 
-        // Validación de salario numérico
         if (txtSalario.getText() == null || txtSalario.getText().trim().isEmpty()) {
             errores.append("- El campo Salario es obligatorio.\n");
         } else {
